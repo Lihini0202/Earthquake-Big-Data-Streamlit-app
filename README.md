@@ -1,6 +1,6 @@
 # 🌎🌩️ Live Earthquake Dashboard – Big Data Simulation
 
-![Earthquake Dashboard](https://raw.githubusercontent.com/yourusername/earthquake_dashboard/main/screenshot.png)
+![Earthquake Dashboard](https://github.com/Lihini0202/Earthquake-Big-Data-Streamlit-app/blob/main/Dashboard.png)
 
 An **interactive Streamlit dashboard** for visualizing **earthquake events worldwide** with a **Big Data flavor**.
 🚀 Fully online, lightweight, and easy to deploy on **Streamlit Cloud**.
@@ -59,7 +59,7 @@ Perfect for a **Big Data portfolio project** or **data visualization demo**.
 1. Clone the repo:
 
 ```bash
-git clone https://github.com/yourusername/earthquake_dashboard.git
+git clone https://github.com/Lihini0202/Earthquake-Big-Data-Streamlit-app.git
 cd earthquake_dashboard
 ```
 
@@ -101,7 +101,7 @@ earthquake_dashboard/
 ├── app.py             # Main Streamlit application
 ├── requirements.txt   # Dependencies
 ├── README.md          # Project documentation
-└── screenshot.png     # Optional screenshots
+└── screenshot.png     # all screenshots
 ```
 
 ---
@@ -109,16 +109,16 @@ earthquake_dashboard/
 ## **📸 Screenshots**
 
 **Dashboard Tab**
-![Dashboard](https://raw.githubusercontent.com/yourusername/earthquake_dashboard/main/screenshot.png)
+![Dashboard](https://github.com/Lihini0202/Earthquake-Big-Data-Streamlit-app/blob/main/Dashboard.png)
 
 **Magnitude Analysis Tab**
-![Magnitude](https://raw.githubusercontent.com/yourusername/earthquake_dashboard/main/screenshot_magnitude.png)
+![Magnitude](https://github.com/Lihini0202/Earthquake-Big-Data-Streamlit-app/blob/main/magnitude.png)
 
 **Depth Analysis Tab**
-![Depth](https://raw.githubusercontent.com/yourusername/earthquake_dashboard/main/screenshot_depth.png)
+![Depth](https://github.com/Lihini0202/Earthquake-Big-Data-Streamlit-app/blob/main/depth.png)
 
 **Summary Stats Tab**
-![Summary](https://raw.githubusercontent.com/yourusername/earthquake_dashboard/main/screenshot_summary.png)
+![Summary](https://github.com/Lihini0202/Earthquake-Big-Data-Streamlit-app/blob/main/summary.png)
 
 ---
 
@@ -130,5 +130,3 @@ earthquake_dashboard/
 * 🌐 Filters by region, depth, and time range
 
 
-
-Do you want me to do that next?
