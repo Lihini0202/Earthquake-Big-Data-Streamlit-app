@@ -1,0 +1,55 @@
+# This is the GitHub Actions CI workflow file
+
+name: CI Pipeline - Build, Lint, and Scan
+
+# This controls when the action runs
+on:
+  push:
+    branches: [ "main" ] # Runs when you push to main
+  pull_request:
+    branches: [ "main" ] # Runs when you create a PR against main
+
+jobs:
+  build-and-test:
+    # The type of machine to run the job on
+    runs-on: ubuntu-latest
+
+    # A sequence of tasks
+    steps:
+    - name: 1. Checkout repository code
+      uses: actions/checkout@v3
+
+    - name: 2. Set up Python 3.9
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+
+    - name: 3. Set up dependency caching
+      uses: actions/cache@v3
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
+
+    - name: 4. Install Python dependencies
+      run: |
+        pip install -r requirements.txt
+        pip install flake8  # Install our linter
+
+    - name: 5. Lint with Flake8 (Check for code style errors)
+      run: |
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=88 --statistics
+
+    - name: 6. Run Trivy Vulnerability Scanner
+      uses: aquasecurity/trivy-action@master
+      with:
+        scan-type: 'fs'  # Scan the file system
+        ignore-unfixed: true
+        format: 'table'
+        exit-code: '0' # '0' means it will report issues but not fail the build
+        
+    - name: 7. Build Docker image (Test if Dockerfile works)
+      run: |
+        docker build -t earthquake-dashboard-app:latest .
