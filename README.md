@@ -94,18 +94,6 @@ http://localhost:8501
 
 ---
 
-## **🗂️ Project Structure**
-
-```
-earthquake_dashboard/
-├── app.py             # Main Streamlit application
-├── requirements.txt   # Dependencies
-├── README.md          # Project documentation
-└── screenshot.png     # all screenshots
-```
-
----
-
 ## **📸 Screenshots**
 
 **Dashboard Tab**
@@ -129,4 +117,40 @@ earthquake_dashboard/
 * 📊 Live charts updating automatically
 * 🌐 Filters by region, depth, and time range
 
+## 🚀 MLOps & DevOps Pipeline (Docker, Terraform & Azure)
 
+This project is not just a Streamlit script; it's a complete, end-to-end **MLOps (Machine Learning Operations)** pipeline deployed on **Microsoft Azure**.
+
+The entire cloud infrastructure is built and managed using **Terraform (Infrastructure as Code)**, and the application is containerized with **Docker**.
+
+
+
+### Core Technologies
+* **Containerization:** **Docker** (using `Dockerfile`)
+* **IaC (Infrastructure as Code):** **Terraform**
+* **Cloud Provider:** **Microsoft Azure**
+* **Azure Services:**
+    * `azurerm_resource_group` (A dedicated project folder)
+    * `azurerm_container_registry` (A private "factory" to store Docker images)
+    * `azurerm_container_group` (A serverless container to run the live app)
+* **CI/CD:** **GitHub Actions** (for automated testing) & a **Manual CD Pipeline** (for deployment)
+
+### 1. The Infrastructure (Terraform)
+This repository contains a dedicated `/terraform` folder. This code is a reusable, automated "blueprint" that:
+1.  Creates a new Resource Group.
+2.  Builds a private Azure Container Registry (ACR) to store the app's image.
+3.  Deploys the app from that registry to a live, public-facing URL using Azure Container Instances (ACI).
+
+### 2. The Application (Docker)
+The `Dockerfile` in this repo packages the entire Python/Streamlit application, its dependencies (`requirements.txt`), and any models (`.pkl` file) into a lightweight, portable container.
+
+### 3. The CI/CD Pipeline
+This project uses a "hybrid" pipeline:
+* **Continuous Integration (CI):** The `.github/workflows/ci-pipeline.yml` file defines a **fully automated GitHub Action**. On every push, it automatically:
+    1.  Lints the code with `flake8`.
+    2.  Scans for vulnerabilities with `Trivy`.
+    3.  Tests that the `Dockerfile` can be built successfully.
+* **Continuous Deployment (CD):** Due to student account permissions (which block automated "robot accounts"), deployment is a **professional manual process**:
+    1.  `docker build ...` (Build the new image)
+    2.  `docker push ...` (Push the image to our Azure Registry)
+    3.  `terraform apply ...` (Tell Azure to deploy the new image)
