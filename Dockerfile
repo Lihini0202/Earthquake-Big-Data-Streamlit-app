@@ -1,4 +1,5 @@
 # Dockerfile
+# This file defines how to build the Earthquake app
 
 # Start from a lightweight Python 3.9 image
 FROM python:3.9-slim

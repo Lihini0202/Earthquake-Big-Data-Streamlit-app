@@ -1,0 +1,9 @@
+# Ignore Terraform state files
+*.tfstate
+*.tfstate.*
+
+# Ignore the .terraform directory (which has the big 222MB plugin)
+.terraform/
+
+# Ignore the lock file
+.terraform.lock.hcl

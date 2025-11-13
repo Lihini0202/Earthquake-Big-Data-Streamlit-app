@@ -2,19 +2,15 @@
 
 name: CI Pipeline - Build, Lint, and Scan
 
-# This controls when the action runs
 on:
   push:
-    branches: [ "main" ] # Runs when you push to main
+    branches: [ "main" ]
   pull_request:
-    branches: [ "main" ] # Runs when you create a PR against main
+    branches: [ "main" ]
 
 jobs:
   build-and-test:
-    # The type of machine to run the job on
     runs-on: ubuntu-latest
-
-    # A sequence of tasks
     steps:
     - name: 1. Checkout repository code
       uses: actions/checkout@v3
@@ -35,9 +31,9 @@ jobs:
     - name: 4. Install Python dependencies
       run: |
         pip install -r requirements.txt
-        pip install flake8  # Install our linter
+        pip install flake8
 
-    - name: 5. Lint with Flake8 (Check for code style errors)
+    - name: 5. Lint with Flake8
       run: |
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=88 --statistics
@@ -45,10 +41,10 @@ jobs:
     - name: 6. Run Trivy Vulnerability Scanner
       uses: aquasecurity/trivy-action@master
       with:
-        scan-type: 'fs'  # Scan the file system
+        scan-type: 'fs'
         ignore-unfixed: true
         format: 'table'
-        exit-code: '0' # '0' means it will report issues but not fail the build
+        exit-code: '0'
         
     - name: 7. Build Docker image (Test if Dockerfile works)
       run: |
