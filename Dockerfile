@@ -31,4 +31,4 @@ USER 10014
 EXPOSE 8501
 
 # 5. START COMMAND: Force Streamlit to run on 0.0.0.0 (Required for Cloud)
-CMD ["streamlit", "run", "app.py", "--server.port=8501", "--server.address=0.0.0.0"]
+CMD ["streamlit", "run", "app.py", "--server.port=8501", "--server.address=0.0.0.0", "--server.enableCORS=false", "--server.enableXsrfProtection=false"]
