@@ -1,34 +1,32 @@
-# Use a lightweight Python version
 FROM python:3.9-slim
 
-# Create a user "choreouser" (ID 10014)
+# 1. Install system dependencies
+RUN apt-get update && apt-get install -y \
+    libgl1 \
+    libglib2.0-0 \
+    && rm -rf /var/lib/apt/lists/*
 
-RUN adduser \
-    --disabled-password \
-    --gecos "" \
-    --home "/nonexistent" \
-    --shell "/sbin/nologin" \
-    --no-create-home \
-    --uid 10014 \
-    "choreouser"
+# 2. Security User
+RUN adduser --disabled-password --gecos "" --uid 10014 choreouser
 
-# Set working directory
 WORKDIR /app
-
-# Copy file
 COPY . .
 
-# Install dependencies
+# 3. Install Dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Give the user permission to the folder
-RUN chown -R 10014:10014 /app
+# 4. CONFIG FIX: Create the Streamlit config directory
+RUN mkdir -p /home/choreouser/.streamlit
 
-# 3. SWITCH USER: Run as the safe user
+# 5. CONFIG FIX: Move the config.toml file to the right place
+# (Assumes you created config.toml in your repo)
+COPY config.toml /home/choreouser/.streamlit/config.toml
+
+# 6. Permissions
+RUN chown -R 10014:10014 /app /home/choreouser
+
 USER 10014
-
-# 4. PORT FIX: Expose Streamlit's default port
 EXPOSE 8501
 
-# 5. START COMMAND: Force Streamlit to run on 0.0.0.0 (Required for Cloud)
-CMD ["streamlit", "run", "app.py", "--server.port=8501", "--server.address=0.0.0.0", "--server.enableCORS=false", "--server.enableXsrfProtection=false"]
+# 7. Simple CMD (Config file handles the rest)
+CMD ["streamlit", "run", "app.py"]
